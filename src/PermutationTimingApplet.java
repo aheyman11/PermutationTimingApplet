@@ -37,7 +37,7 @@ public class PermutationTimingApplet extends Applet {
         d2 = generateTimingData(new Algorithm2());
         //System.out.println(Arrays.toString(d1));
 
-        data1 = graph.loadDataSet(d1, d1.length/2);
+        data1 = graph.loadDataSet(d1, d1.length / 2);
         data1.linestyle = 1;
         data1.linecolor = new Color(0, 255, 0);
         data1.marker = 1;
@@ -46,7 +46,7 @@ public class PermutationTimingApplet extends Applet {
         data1.legend(200, 100, "Algorithm 1");
         data1.legendColor(Color.black);
 
-        data2 = graph.loadDataSet(d2, d2.length/2);
+        data2 = graph.loadDataSet(d2, d2.length / 2);
         data2.linestyle = 1;
         data2.linecolor = new Color(255, 0, 0);
         data2.marker = 1;
@@ -99,26 +99,17 @@ public class PermutationTimingApplet extends Applet {
         int dataSize = 100;
         ArrayList<Double> timingData = new ArrayList<Double>();
         TimeInterval t = new TimeInterval();
-        t.startTiming();
-        algorithm.permute(dataSize);
-        t.endTiming();
-        timingData.add((double) dataSize);
-        timingData.add(t.getElapsedTime());
-        System.out.println("dataSize is " + dataSize + " and time is " + t.getElapsedTime());
-        while (true) {
-            dataSize = dataSize * 2;
+        do {
             t.startTiming();
             algorithm.permute(dataSize);
             t.endTiming();
             timingData.add((double) dataSize);
             timingData.add(t.getElapsedTime());
             System.out.println("dataSize is " + dataSize + " and time is " + t.getElapsedTime());
-            if (dataSize > 7000000 || t.getElapsedTime() > 30) {
-                break;
-            }
-        }
+            dataSize = dataSize * 2;
+        } while (dataSize < 7000000 && t.getElapsedTime() < 30);
         double timingDataArray[] = new double[timingData.size()];
-        for (int i = 0; i < timingData.size(); i++){
+        for (int i = 0; i < timingData.size(); i++) {
             timingDataArray[i] = timingData.get(i);
         }
         return timingDataArray;
