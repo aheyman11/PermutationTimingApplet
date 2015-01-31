@@ -68,29 +68,19 @@ public class TimingTester {
         int dataSize = 100;
         ArrayList<Double> timingData = new ArrayList<Double>();
         TimeInterval t = new TimeInterval();
-        t.startTiming();
-        algorithm.permute(dataSize);
-        t.endTiming();
-        timingData.add((double) dataSize);
-        timingData.add(t.getElapsedTime());
-        System.out.println("dataSize is " + dataSize + " and time is " + t.getElapsedTime());
-        while (true) {
-            dataSize = dataSize * 2;
+        do {
             t.startTiming();
             algorithm.permute(dataSize);
             t.endTiming();
             timingData.add((double) dataSize);
             timingData.add(t.getElapsedTime());
             System.out.println("dataSize is " + dataSize + " and time is " + t.getElapsedTime());
-            if (dataSize > 7000000 || t.getElapsedTime() > 30) {
-                break;
-            }
-        }
+            dataSize = dataSize * 2;
+        } while (dataSize < 7000000 && t.getElapsedTime() < 30);
         double timingDataArray[] = new double[timingData.size()];
-        for (int i = 0; i < timingData.size(); i++){
-            timingDataArray[i] = timingData.get(i).doubleValue();
+        for (int i = 0; i < timingData.size(); i++) {
+            timingDataArray[i] = timingData.get(i);
         }
-        System.out.println(timingDataArray);
         return timingDataArray;
     }
 }
