@@ -3,6 +3,7 @@ import java.util.Random;
 
 /**
  * Created by andreahe on 1/31/15.
+ * Implements Weiss's third permutation algorithm.
  */
 public class Algorithm3 implements PermutationAlgorithm{
     public  void permute (int n) {
