@@ -70,9 +70,9 @@ public class PermutationTimingApplet extends Applet {
         xaxis.setTitleText("N (array length)");
         xaxis.setTitleFont(new Font("TimesRoman", Font.PLAIN, 20));
         xaxis.setLabelFont(new Font("Helvetica", Font.PLAIN, 15));
-/*
-**      Attach data sets to the Left Axis
-*/
+
+      //Attach data sets to the Left Axis
+
         yaxis_left = graph.createAxis(Axis.LEFT);
         yaxis_left.attachDataSet(data1);
         yaxis_left.attachDataSet(data2);
@@ -85,8 +85,12 @@ public class PermutationTimingApplet extends Applet {
 
     }
 
+    /*Method to generate timing data for permutation algorithms.
+    @param algorithm an instance of one of the three permutation algorithms
+    @return An array of doubles consisting of a data size followed by the time to permute a set of that size.
+    * */
     public double[] generateTimingData(PermutationAlgorithm algorithm) {
-        int dataSize = 100;
+        int dataSize = INITIAL_DATA_SIZE;
         ArrayList<Double> timingData = new ArrayList<Double>();
         TimeInterval t = new TimeInterval();
         do {
@@ -97,11 +101,14 @@ public class PermutationTimingApplet extends Applet {
             timingData.add(t.getElapsedTime());
             System.out.println("dataSize is " + dataSize + " and time is " + t.getElapsedTime());
             dataSize = dataSize * 2;
-        } while (dataSize < 7000000 && t.getElapsedTime() < 30);
+        } while (dataSize < MAX_DATA_SIZE && t.getElapsedTime() < MAX_TIME);
         double timingDataArray[] = new double[timingData.size()];
         for (int i = 0; i < timingData.size(); i++) {
             timingDataArray[i] = timingData.get(i);
         }
         return timingDataArray;
     }
+    final int INITIAL_DATA_SIZE = 100;
+    final int MAX_DATA_SIZE = 7000000;
+    final int MAX_TIME = 30;
 }
